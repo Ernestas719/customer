@@ -6,7 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -18,16 +21,16 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-
-//    @PostMapping("/update")
-//    public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerDto customerDto) {
-//        try {
-//            return new ResponseEntity<>(customerService.updateCustomer(customerDto));
-//        } catch (Exception e) {
-//            log.error("customer not found: ", e);
-//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
+    @PostMapping("/update")
+    public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerDto customerDto) {
+        try {
+            boolean updatedCustomer = customerService.updateCustomer(customerDto);
+            return new ResponseEntity<>(updatedCustomer ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE);
+        } catch (Exception e) {
+            log.error("Customer not found or update failed: ", e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 
     @PostMapping("/create")
     public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {

@@ -23,13 +23,13 @@ import java.util.List;
 @AttributeOverride(name = "modifiedDate", column = @Column(name = "last_modified_date", nullable = false))
 public class Account extends BaseEntity {
 
-    @Column
+    @Column(nullable = false)
     private String accountNumber;
 
     @Column(nullable = false)
     private int numberOfOwners;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "account_id")
     private List<Customer> customers;
 }

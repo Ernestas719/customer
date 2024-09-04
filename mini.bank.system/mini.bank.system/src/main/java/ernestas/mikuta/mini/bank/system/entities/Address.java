@@ -24,7 +24,7 @@ import org.hibernate.envers.Audited;
 @AttributeOverride(name = "modifiedDate", column = @Column(name = "last_modified_date", nullable = false))
 public class Address extends BaseEntity {
 
-    @Column
+    @Column(nullable = false, length = 30)
     private String country;
 
     @Column(nullable = false, length = 30)

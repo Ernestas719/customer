@@ -8,14 +8,12 @@ import ernestas.mikuta.mini.bank.system.repositories.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "app.initial.data.create.enable", havingValue = "true")
 public class DataImport implements ApplicationRunner {
 
     private final AccountRepository accountRepository;
@@ -35,6 +33,18 @@ public class DataImport implements ApplicationRunner {
                 .fullAddress("ugniagese g. 2")
                 .build();
 
+        Address address3 = Address.builder()
+                .country("USA")
+                .city("New York")
+                .fullAddress("123 Broadway St")
+                .build();
+
+        Address address4 = Address.builder()
+                .country("USA")
+                .city("San Francisco")
+                .fullAddress("456 Market St")
+                .build();
+
         Customer customer1 = Customer.builder()
                 .firstName("Jons")
                 .lastName("Jablonskis")
@@ -52,16 +62,33 @@ public class DataImport implements ApplicationRunner {
                 .type(CustomerType.PUBLIC)
                 .build();
 
+        Customer customer3 = Customer.builder()
+                .firstName("Jonas")
+                .lastName("Savickas")
+                .phoneNumber("+370699775453")
+                .email("jonas.savickas@gmail.com")
+                .type(CustomerType.PUBLIC)
+                .addresses(List.of(address3, address4))
+                .build();
+
         Account account1 = Account.builder()
                 .accountNumber("1")
+                .numberOfOwners(1)
                 .customers(List.of(customer1, customer2))
                 .build();
 
         Account account2 = Account.builder()
                 .accountNumber("2")
+                .numberOfOwners(1)
                 .build();
 
-        accountRepository.saveAll(List.of(account1, account2));
+        Account account3 = Account.builder()
+                .accountNumber("3")
+                .numberOfOwners(1)
+                .customers(List.of(customer3))
+                .build();
+
+        accountRepository.saveAll(List.of(account1, account2, account3));
 
     }
 }

@@ -22,7 +22,7 @@ public class CustomerMapper implements BaseMapper<Customer, CustomerDto> {
     public Customer toEntity(CustomerDto dto) {
         return Customer.builder()
                 .firstName(dto.firstName())
-                .lastName(dto.firstName())
+                .lastName(dto.lastName())
                 .phoneNumber(dto.phoneNumber())
                 .email(dto.email())
                 .type(Optional.ofNullable(dto.type()).map(CustomerType::valueOf).orElse(null))
@@ -38,9 +38,13 @@ public class CustomerMapper implements BaseMapper<Customer, CustomerDto> {
                 .lastName(entity.getLastName())
                 .phoneNumber(entity.getPhoneNumber())
                 .email(entity.getEmail())
-                .accountNumber(Optional.ofNullable(accountRepository.findCustomerId(entity.getId())).map(Account::getAccountNumber).orElse(null))
-                .type(Optional.ofNullable(entity.getType()).map(Enum::name).orElse(null))
-                .addresses(Optional.ofNullable(entity.getAddresses()).map(addressMapper::toDto).orElse(Collections.emptyList()))
+                .accountNumber(Optional.ofNullable(accountRepository.findCustomerId(entity.getId()))
+                        .map(Account::getAccountNumber)
+                        .orElse(null))
+                .type(Optional.ofNullable(entity.getType()).map(Enum::name)
+                        .orElse(null))
+                .addresses(Optional.ofNullable(entity.getAddresses()).map(addressMapper::toDto)
+                        .orElse(Collections.emptyList()))
                 .build();
     }
 }

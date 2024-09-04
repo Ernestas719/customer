@@ -12,6 +12,7 @@ public class AddressMapper implements BaseMapper<Address, AddressDto> {
     @Override
     public Address toEntity(AddressDto dto) {
         return Address.builder()
+                .country(dto.country())
                 .city(dto.city())
                 .fullAddress(dto.fullAddress())
                 .build();
@@ -21,6 +22,7 @@ public class AddressMapper implements BaseMapper<Address, AddressDto> {
     public AddressDto toDto(Address entity) {
         return AddressDto.builder()
                 .id(entity.getId())
+                .country(entity.getCountry())
                 .city(entity.getCity())
                 .fullAddress(entity.getFullAddress())
                 .build();

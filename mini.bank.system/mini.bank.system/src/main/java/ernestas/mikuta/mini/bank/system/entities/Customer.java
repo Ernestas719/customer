@@ -36,11 +36,11 @@ public class Customer extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private CustomerType type;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "cus_id")
     private List<Address> addresses;
-
 }
